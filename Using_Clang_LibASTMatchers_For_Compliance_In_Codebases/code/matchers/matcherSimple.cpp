@@ -43,8 +43,6 @@ void coutInstantiatedJson(std::string name, InstantiationResult instantiatedWith
 }
 InstantiationResult readConfigArg(const MatchFinder::MatchResult &Result)
 {
-  auto *cfgSection = Result.Nodes.getNodeAs<clang::MemberExpr>("cfgSection");
-  auto *cfgClass = Result.Nodes.getNodeAs<clang::MemberExpr>("cfgClass");
   auto *strLiteral = Result.Nodes.getNodeAs<clang::StringLiteral>("strLit");
   if (strLiteral)
   {
@@ -52,18 +50,7 @@ InstantiationResult readConfigArg(const MatchFinder::MatchResult &Result)
       InstantiationResultType::Success,
       "{ \"type\": \"StringLiteral\", \"value\": \"" + strLiteral->getString().str() + "\" }");
   }
-  if (!cfgSection || !cfgClass) return std::make_pair<InstantiationResultType, std::string>(InstantiationResultType::Error, "Something is wrong");
-  std::string fieldName = cfgSection->getMemberDecl()->getNameAsString();
-  std::string sectionName = cfgClass->getMemberDecl()->getNameAsString();
-  std::string className = cfgClass->getMemberDecl()->getQualifiedNameAsString();
-  size_t lastColon = className.find_last_of(":");
-  std::string trimmedClassName = className.substr(0, lastColon - 1);
-  return std::make_pair<InstantiationResultType, std::string>(
-    InstantiationResultType::Success,
-    "{ \"type\": \"ConfigValue\", \"classname\": \"" +
-    trimmedClassName + "\", \"xmlpath\": \"" +
-    sectionName + "." + fieldName + "\" }"
-  );
+  return std::make_pair<InstantiationResultType, std::string>(InstantiationResultType::Error, "Something is wrong");
 }
 
 DeclarationMatcher LocalAlarmMatcher= varDecl(hasType(asString("Spooky::Factory::AlarmClient")),
