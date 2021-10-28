@@ -3,11 +3,11 @@
 
 #include <string>
 
-namespace Spooky::Config {
+namespace Spooky {  namespace Config {
 
 class ConfigFile {
     public:
         class Section{};
 };
-}
-#endif 
+}}
+#endif

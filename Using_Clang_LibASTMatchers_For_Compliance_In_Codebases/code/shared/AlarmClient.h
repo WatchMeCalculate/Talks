@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Spooky::Factory {
+namespace Spooky {  namespace Factory {
 
 class AlarmClient {
     public:
@@ -13,6 +13,5 @@ class AlarmClient {
     private:
         std::string alarmName_;
 };
-    
-}
-#endif 
+}}
+#endif

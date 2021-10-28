@@ -2,9 +2,7 @@
 #include "shared/AlarmClient.h"
 #include "CfgWrapperMonitorApi.h"
 
-
-
-namespace Spooky::Factory {
+namespace Spooky {  namespace Factory {
 
 class WrapperMonitor {
     private:
@@ -21,9 +19,9 @@ class WrapperMonitor {
             /*
              * We do some sort of logic and determine to raise an alarm
              */
-            noWrapperAlarm.raise();
+            noWrapperAlarm_->raise();
         }
 
-}
+};
 
-}
+}}
